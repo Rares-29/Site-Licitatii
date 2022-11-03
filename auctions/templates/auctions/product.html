@@ -1,0 +1,66 @@
+{%extends 'auctions/layout.html'%}
+
+{%block body%}
+<div>
+    <a href = "{%url 'product' item.id%}"><img src = "../media/{{item.Image}}" style = "height:250px; width:250px"> </a>
+    <h2 >{{item.name}}</h2>
+    {%if item.winner == user.username%}
+    <h1>Felicitari, ai castigat licitatia!</h1>
+    {%endif%}
+    {%if item.winner is not None%}
+        <h1>Vandut pentru {{bid.offer}} RON lui {{bid.bidder}}</h1>
+    {%endif%}
+<h7 style = "display:block;font-size:15px; font-family:'Courier New', Courier, monospace">Vanzator: {{item.seller}}</h7>
+<div style = "font-size:15px;font-family:'Courier New', Courier, monospace">Pretul de pornire: {{item.price}} RON</div>
+{%if item.winner is None%}
+    <div style = "font-size:15px;font-family:'Courier New', Courier, monospace"> Oferta actuala: {{bid.offer}} RON facuta de {{bid.bidder}}</div>
+    <p>{{error}}</p>
+    {%if user.is_authenticated%}
+        <form  action = "{%url 'product' item.id%}" method = "POST">
+            {%csrf_token%}
+            <input type = "number" name = "y_offer" placeholder = "Oferta ta" required>
+            <input type = "text" name = "Nume" placeholder = "Nume" required>
+            <input type = "tel" name = "Numar" placeholder = "Numar de contact" pattern = "[0-9]{10}" required>
+            <input type = "submit" style = "background-color: rgb(1, 1, 85); border: 1px solid black; border-radius: 5px;color: white" value ="Plaseaza oferta"> 
+        </form>
+    <form style = "margin-bottom:20px;margin-top:10px" action = "{%url 'product' item.id%}" method = "POST">
+        {%csrf_token%}
+        <button name = "watchlist" style = "background-color: rgb(1, 1, 85); color: white; border: 1px solid black; border-radius: 5px;">Favorite</button>
+    </form>
+        {%if user.username == item.seller%}
+            <div style = "border: 1px solid black; border-radius:4px; background-color: rgb(242, 242, 255); width:fit-content; margin-bottom: 5px">
+                <p>Nume: {{bid.Name}}</p>
+                <p> Numar: {{bid.Number}}</p>
+                <p>Oferta: {{bid.offer}} RON</p>
+            </div>
+            <form action = "{%url 'product' item.id%}" method = "POST">
+                {%csrf_token%}
+                <button style = "background-color: rgb(1, 1, 85); color: white; border: 1px solid black; border-radius: 5px;" name = "button">Inchide licitatia</button>
+            </form>
+        {%endif%}
+    {%else%}
+        <p style = "font-style:italic">Trebuie sa fii autentificat pentru a lasa o oferta si pentru a adauga produsul la favorite.</p>
+    {%endif%}
+{%endif%}
+    </div>
+<p style = "display:block;">{{item.description}}</p>
+{%if user.is_authenticated%}
+<form action = "{%url 'product' item.id%}" method = "POST">
+    {%csrf_token%}
+    <textarea rows="4" cols="50" placeholder="Lasa o recenzie produsului" name = "comment" required></textarea>
+    <input style = "display:block; background-color: rgb(1, 1, 85); color: white; border: 1px solid black; border-radius: 5px;" type = "submit" value = "Adauga un review">
+</form>
+{%else%}
+<p style = "font-style:italic">Trebuie sa fii autentificat pentru a adauga recenzii</p>
+{%endif%}
+<h1>Recenzii </h1>
+<ul style = "list-style-type:none;">
+    {%for comment in comments%}
+    <li>
+        <div><i>{{comment.user_com}}</i>: {{comment.comment}}</div>
+
+    </li>
+    {%endfor%}
+</ul>
+
+{%endblock%}

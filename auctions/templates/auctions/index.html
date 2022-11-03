@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Produse scoase la licitatie</h2>
+    <ul style = "list-style-type:none; display:flex;flex-direction:row;flex-wrap:wrap;justify-content: space-around;">
+    {%for item in items%}
+        <li style = "width:250px">
+            <a href = "{%url 'product' item.id%}"><img src = "media/{{item.Image}}" style = "height:250px; width:250px"> </a>
+            <div style = "-webkit-line-clamp: 2;-webkit-box-orient: vertical;-moz-box-orient: vertical;-moz-line-clamp: 2;display: -webkit-box;white-space: normal;overflow: hidden;margin-top:5px; line-height:18px;">{{item.name}}</div>
+            <h2>{{item.price}} RON</h2>
+            <h6>Vanzator: <i>{{item.seller}} </i></h3>
+            <p>{{item.date}}</p>
+
+        </li>
+    {%endfor%}
+    </ul>
+{% endblock %}

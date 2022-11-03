@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Login</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Utilizator">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Parola">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Login">
+    </form>
+
+   Nu ai inca un cont? <a href="{% url 'register' %}">Inregistreaza-te aici</a>
+
+{% endblock %}

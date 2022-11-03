@@ -1,0 +1,17 @@
+{%extends 'auctions/layout.html'%}
+
+{%block body%}
+<h1>Obiectele tale favorite</h1>
+<ul>
+    {%for every in product%}
+    <li>
+        <h1>{{every.name}}</h1>
+        <p>{{every.description}}</p>
+        <a href = "{%url 'product' every.id%}"><img src = "../media/{{every.Image}}" style = "height:250px; width:250px"> </a>
+        <h2>${{every.price}}</h2>
+        <h6>Vanzator: <i>{{every.seller}} </i></h3>
+        <p>{{every.date}}</p>
+    </li>
+    {%endfor%}
+</ul>
+{%endblock%}

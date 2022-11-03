@@ -1,0 +1,20 @@
+{%extends 'auctions/layout.html'%}
+
+{%block body%}
+    {% if user.is_authenticated %}
+        <form enctype="multipart/form-data" action = "{%url 'create_listing'%}" method = "POST">
+            {%csrf_token%}
+            <input style = "display:block; margin-bottom:10px" type = "text" name = "title" placeholder = "Titlu">
+            <textarea style = "display:block; margin-bottom:10px" row = "4" cols = "40" name = "description" placeholder = "Descriere"></textarea> 
+            <input style = "display:block; margin-bottom:10px" type = "number" name = "price" placeholder = "Pret de pornire"> 
+            <input style = "display:block; margin-bottom:10px" type = "file" name = "image"> 
+            <select style = "display:block; margin-bottom:10px" name = "category">
+                {%for category in categories%}
+                <option value = "{{category.id}}">{{category}}</option>
+                {%endfor%}
+            </select>
+            <input type = "submit" value = "Trimite">
+        </form>
+    {%else%} <h1>Nu esti logat</h1>
+    {%endif%}
+{%endblock%}

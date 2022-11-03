@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Licitatii{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div style =  "background-color: rgb(1, 1, 85); margin-left: -10px; margin-top: -10px; margin-right: -10px;width:auto">
+        <h1 style = "color : white; text-align: center">Site de licitatii</h1>
+        <div style = "color : white">
+            {% if user.is_authenticated %}
+                Logat ca <strong>{{ user.username }}</strong>.
+            {% else %}
+                Nu esti logat.
+            {% endif %}
+        </div>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Produse scoase la licitatie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'categories' %}">Categorii</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'watchlist' %}">Favorite</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'create_listing' %}">Creeaza o licitatie</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Inregistreaza-te</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+        <hr>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
